@@ -6,7 +6,7 @@ import { User } from '../../entities/User';
 import { AppError } from '../../shared/error/AppError';
 
 export class UserServices {
-   async signin(user: Partial<User>) {
+   async signUp(user: Partial<User>) {
       if(typeof user.name !== 'string' || typeof user.email !== 'string' || typeof user.password !== 'string') {
          throw new AppError("Informações iválidas, tente reinvia-las", 401);
       }
@@ -37,5 +37,7 @@ export class UserServices {
       });
 
       return { token : token };
-   } 
+   }
+
+   async 
 }
