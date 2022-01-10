@@ -9,4 +9,12 @@ export class UserController {
 
       return response.status(201).send(user);
    }
+
+   async signIn(request: Request, response: Response) {
+      const { email, password } = request.body;
+      const userService = new UserServices();
+      const result = await userService.signIn({ email, password });
+
+      return response.status(200).send(result);
+   }
 }
