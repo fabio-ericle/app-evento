@@ -11,7 +11,7 @@ export class UserServices {
          throw new AppError("Informações iválidas, tente reinvia-las", 401);
       }
       if(user.name.length < 6 || user.email.length < 6 || user.password.length < 6) {
-         throw new AppError("As informações não antendem aos requisitos, tente invialas novamente", 401);
+         throw new AppError("As informações não antendem aos requisitos, tente enviá-las novamente", 401);
       }
 
       const userRepository = getRepository(User);
