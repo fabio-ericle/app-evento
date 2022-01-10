@@ -1,4 +1,4 @@
-import { hash } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 import { randomUUID } from 'crypto';
 import { sign } from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
@@ -39,5 +39,30 @@ export class UserServices {
       return { token : token };
    }
 
-   async 
+   async signIn(user: Pick<User, "email" | "password">) {
+      if(typeof user.email !== 'string' || typeof user.password !== 'string') {
+         throw new AppError("Informações iválidas, tente reinvia-las", 401);
+      }
+      if(user.email.length < 6 || user.password.length < 6) {
+         throw new AppError("As informações não antendem aos requisitos, tente enviá-las novamente", 401);
+      }
+
+      const userRepository = getRepository(User);
+
+      const currentUser = await userRepository.findOne({ where: { email : user.email } });
+      if(!currentUser) {
+         throw new AppError("E-mail/Senha incorretos", 401);
+      }
+
+      const passwordMatch = await compare(user.password, currentUser.password);
+      if(!passwordMatch) {
+         throw new AppError("Email/Senha incorretos", 401);
+      }
+
+      const token = sign({ name : currentUser.name, email : user.email }, 
+         process.env.TOKEN, { subject: currentUser.id, expiresIn: "14d",
+      });
+
+      return { token : token };
+   }
 }
