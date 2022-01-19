@@ -5,7 +5,7 @@ import cors from 'cors';
 import { globalErrors } from './middlewares/globalErrors';
 import routes from './routes';
 
-const PORT = process.env.PORT || '3001';
+const PORT = process.env.PORT ?? '3001';
 
 createConnection().then(
    connection => {
@@ -17,7 +17,7 @@ createConnection().then(
       app.use(globalErrors)
 
       app.listen(PORT, () => {
-         console.log(`Server is running at port: ${PORT}`);
+         console.log(`Server is running at PORT: ${PORT}`);
       });
    }
 ).catch((err) => {
