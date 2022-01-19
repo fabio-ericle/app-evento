@@ -17,7 +17,7 @@ export function userAuthenticated(request: Request, response: Response, next: Ne
    const [, token] = authToken.split(" ");
 
    try {
-      const { sub } = verify(token, process.env.TOKEN) as Ipayload;
+      const { sub } = verify(token, process.env.SECRECT_KEY) as Ipayload;
 
       request.user = {
          id : sub,
