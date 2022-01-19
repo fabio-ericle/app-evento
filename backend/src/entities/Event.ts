@@ -25,8 +25,10 @@ export class Event {
    @ManyToOne(() => User, user => user.id)
    @JoinColumn()
    user: User;
+   
    @Column()
    limit: number;
 
+   @Column()
    amountSubscriber: number;
 }
